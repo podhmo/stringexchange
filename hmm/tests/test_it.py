@@ -1,21 +1,56 @@
 # -*- coding:utf-8 -*-
-def _getTarget():
-    from hmm import Emitter
-    return Emitter
+def _makeRequest(config, path="/"):
+    from pyramid.request import Request
+    from pyramid.interfaces import IRequestExtensions
+
+    request = Request.blank(path)
+    extensions = config.registry.getUtility(IRequestExtensions)
+    request.registry = config.registry
+    request._set_extensions(extensions)
+    return request
 
 
-def _makeOne(*args, **kwargs):
-    return _getTarget()(*args, **kwargs)
+def _makeRouter(config):
+    from pyramid.router import Router
+    router = Router(config.registry)
+    return router
+
+
+def test_reify_it():
+    from pyramid.testing import testConfig
+
+    with testConfig() as config:
+        config.include("hmm")
+
+        # request time
+        request = _makeRequest(config, path="/")
+        assert request.emitter == request.emitter
 
 
 def test_it():
-    target = _makeOne()
-    xs = [target.xxx, "hello", "this is", target.xxx, "www"]
+    from pyramid.testing import testConfig
 
-    publisher = target.publisher("xxx")
-    publisher.publish("@.@")
-    content = "".join(xs)
+    with testConfig() as config:
+        config.include("hmm")
+        config.add_route("hello", "/")
 
-    result = target.emit(content)
-    assert result == "@.@hellothis is@.@www"
+        def hello_view(context, request):
+            from pyramid.response import Response
+            js = request.emitter.publisher("js")
+            response = Response("""
+            <html><head>{}</head><body></body></html>
+            """.format(request.emitter.js))
 
+            js.publish('<script src="my.js></script>"')
+            assert "my.js" not in response.text
+            return response
+
+        config.add_view(hello_view, route_name="hello")
+
+        # request time
+        router = _makeRouter(config)
+
+        request = _makeRequest(config, path="/")
+        response = router.handle_request(request)
+
+        assert "my.js" in response.text

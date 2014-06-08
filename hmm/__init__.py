@@ -52,3 +52,31 @@ class Publisher(object):
 
     def publish(self, message):
         return self.buf.append(message)
+
+
+class EmitRequestTextTweenFactory(object):
+    def __init__(self, handler, setting):
+        self.handler = handler
+
+    def __call__(self, request):
+        response = self.handler(request)
+        if response.status_int != 200:
+            return response
+
+        if not (response.content_type and
+                response.content_type.lower() in ['text/html', 'text/xml']):
+            return response
+
+        response_text = response.text
+        response.text = ""
+        response.write(request.emitter.emit(response_text))
+        return response
+
+
+def get_emitter(request):
+    return Emitter()
+
+
+def includeme(config):
+    config.add_tween("hmm.EmitRequestTextTweenFactory")
+    config.add_request_method(get_emitter, "emitter", reify=True)
