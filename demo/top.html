@@ -1,15 +1,17 @@
 <html>
 <head>
-${request.string_exchange.subscribe("css", "newline")}
+${request.string_exchange.subscribe("css", emit="newline", iterator="unique")}
 </head>
 <body>
 
 <!-- foo widget -->
+<% js.publish('<script src="base.js"></script>') %>
 <% js.publish('<script src="foo.js"></script>') %>
 <h1>foo</h1>
 foo content
 
 <!-- boo widget -->
+<% js.publish('<script src="base.js"></script>') %>
 <% js.publish('<script src="boo.js"></script>') %>
 <% css.publish('<link href="widget.boo.css"></link>') %>
 <h1>boo</h1>
@@ -19,6 +21,6 @@ foo content
 <li>boo2</li>
 </ul>
 
-${request.string_exchange.subscribe("js", "newline")}
+${request.string_exchange.subscribe("js", "newline", iterator="unique")}
 </body>
 </html>

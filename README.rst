@@ -69,16 +69,18 @@ top.html
     ## top.html
     <html>
     <head>
-    ${request.string_exchange.subscribe("css", "newline")}
+    ${request.string_exchange.subscribe("css", emit="newline", iterator="unique")}
     </head>
     <body>
-
+    
     <!-- foo widget -->
+    <% js.publish('<script src="base.js"></script>') %>
     <% js.publish('<script src="foo.js"></script>') %>
     <h1>foo</h1>
     foo content
-
+    
     <!-- boo widget -->
+    <% js.publish('<script src="base.js"></script>') %>
     <% js.publish('<script src="boo.js"></script>') %>
     <% css.publish('<link href="widget.boo.css"></link>') %>
     <h1>boo</h1>
@@ -87,8 +89,8 @@ top.html
     <li>boo1</li>
     <li>boo2</li>
     </ul>
-
-    ${request.string_exchange.subscribe("js", "newline")}
+    
+    ${request.string_exchange.subscribe("js", "newline", iterator="unique")}
     </body>
     </html>
 
@@ -103,22 +105,25 @@ output
     <link href="widget.boo.css"></link>
     </head>
     <body>
-
+    
     <!-- foo widget -->
-
+    
+    
     <h1>foo</h1>
     foo content
-
+    
     <!-- boo widget -->
-
-
+    
+    
+    
     <h1>boo</h1>
     <ul>
     <li>boo0</li>
     <li>boo1</li>
     <li>boo2</li>
     </ul>
-
+    
+    <script src="base.js"></script>
     <script src="foo.js"></script>
     <script src="boo.js"></script>
     </body>

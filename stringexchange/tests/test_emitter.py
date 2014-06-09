@@ -23,9 +23,9 @@ def test_it():
 
 
 def test_funcall():
-    from stringexchange import function_call_emitter
+    from stringexchange import function_call_emitter, stripped_iterator
 
-    target = _makeOne(function_call_emitter)
+    target = _makeOne(function_call_emitter, stripped_iterator)
     fmt = """f(x, {}, y, z)""".format(target.subscribe("args"))
 
     publisher = target.publisher("args")
