@@ -1,0 +1,22 @@
+<html>
+<head>
+${request.string_exchange.subscribe("js", "newline")}
+</head>
+<body>
+
+<!-- foo widget -->
+<% js.publish('<script src="foo.js"></script>') %>
+<h1>foo</h1>
+foo content
+
+<!-- boo widget -->
+<% js.publish('<script src="boo.js"></script>') %>
+<h1>boo</h1>
+<ul>
+<li>boo0</li>
+<li>boo1</li>
+<li>boo2</li>
+</ul>
+
+</body>
+</html>

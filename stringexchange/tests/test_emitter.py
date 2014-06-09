@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 def _getTarget():
-    from stringexchange import StringExchange
-    return StringExchange
+    from stringexchange import make_exchange
+    return make_exchange
 
 
 def _makeOne(*args, **kwargs):
@@ -9,9 +9,9 @@ def _makeOne(*args, **kwargs):
 
 
 def test_it():
-    from stringexchange import default_emiter_factory
+    from stringexchange import join_emitter
 
-    target = _makeOne(default_emiter_factory)
+    target = _makeOne(join_emitter)
     xs = [target.subscribe("xxx"), "hello", "this is", target.subscribe("xxx"), "www"]
 
     publisher = target.publisher("xxx")
@@ -25,7 +25,7 @@ def test_it():
 def test_funcall():
     from stringexchange import function_call_emitter
 
-    target = _makeOne((lambda name: function_call_emitter))
+    target = _makeOne(function_call_emitter)
     fmt = """f(x, {}, y, z)""".format(target.subscribe("args"))
 
     publisher = target.publisher("args")

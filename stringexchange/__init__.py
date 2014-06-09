@@ -27,6 +27,11 @@ def function_call_emitter(hashval, xs, string):
     return string.replace(hashval, ", ".join(x.strip() for x in xs))
 
 
+@provider(IEmitter)
+def newline_join_emitter(hashval, xs, string):
+    return string.replace(hashval, "\n".join(x.rstrip() for x in xs))
+
+
 def default_emiter_factory(name):
     return join_emitter
 
@@ -38,6 +43,10 @@ class EmitterFactory(object):
     def __call__(self, name):
         q = self.request.registry.queryUtility
         return q(IEmitter, name=name, default=join_emitter)
+
+
+def make_exchange(emitter):
+    return StringExchange(lambda name: emitter)
 
 
 class StringExchange(object):
@@ -120,3 +129,4 @@ def includeme(config):
     config.add_directive("add_emitter", add_emitter)
     config.add_emitter(join_emitter)
     config.add_emitter(function_call_emitter, "call")
+    config.add_emitter(newline_join_emitter, "newline")
