@@ -24,7 +24,7 @@ def test_reify_it():
 
         # request time
         request = _makeRequest(config, path="/")
-        assert request.emitter == request.emitter
+        assert request.string_exchange == request.string_exchange
 
 
 def test_it():
@@ -36,10 +36,10 @@ def test_it():
 
         def hello_view(context, request):
             from pyramid.response import Response
-            js = request.emitter.publisher("js")
+            js = request.string_exchange.publisher("js")
             response = Response("""
             <html><head>{}</head><body></body></html>
-            """.format(request.emitter.js))
+            """.format(request.string_exchange.subscribe("js")))
 
             js.publish('<script src="my.js></script>"')
             assert "my.js" not in response.text
