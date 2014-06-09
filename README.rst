@@ -34,7 +34,8 @@ on pyramid
 
     def top_view(request):
         js = request.string_exchange.publisher("js")
-        return {"js": js}
+        css = request.string_exchange.publisher("css")
+        return {"css": css, "js": js}
 
 
     if __name__ == '__main__':
@@ -60,7 +61,7 @@ on pyramid
     ## top.html
     <html>
     <head>
-    ${request.string_exchange.subscribe("js", "newline")}
+    ${request.string_exchange.subscribe("css", "newline")}
     </head>
     <body>
 
@@ -71,6 +72,7 @@ on pyramid
 
     <!-- boo widget -->
     <% js.publish('<script src="boo.js"></script>') %>
+    <% css.publish('<link href="widget.boo.css"></link>') %>
     <h1>boo</h1>
     <ul>
     <li>boo0</li>
@@ -78,8 +80,10 @@ on pyramid
     <li>boo2</li>
     </ul>
 
+    ${request.string_exchange.subscribe("js", "newline")}
     </body>
     </html>
+
 
 .. code:: bash
 
@@ -87,8 +91,7 @@ on pyramid
     $ curl http://localhost:8080
     <html>
     <head>
-    <script src="foo.js"></script>
-    <script src="boo.js"></script>
+    <link href="widget.boo.css"></link>
     </head>
     <body>
 
@@ -99,6 +102,7 @@ on pyramid
 
     <!-- boo widget -->
 
+
     <h1>boo</h1>
     <ul>
     <li>boo0</li>
@@ -106,5 +110,7 @@ on pyramid
     <li>boo2</li>
     </ul>
 
+    <script src="foo.js"></script>
+    <script src="boo.js"></script>
     </body>
     </html>

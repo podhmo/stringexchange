@@ -1,6 +1,6 @@
 <html>
 <head>
-${request.string_exchange.subscribe("js", "newline")}
+${request.string_exchange.subscribe("css", "newline")}
 </head>
 <body>
 
@@ -11,6 +11,7 @@ foo content
 
 <!-- boo widget -->
 <% js.publish('<script src="boo.js"></script>') %>
+<% css.publish('<link href="widget.boo.css"></link>') %>
 <h1>boo</h1>
 <ul>
 <li>boo0</li>
@@ -18,5 +19,6 @@ foo content
 <li>boo2</li>
 </ul>
 
+${request.string_exchange.subscribe("js", "newline")}
 </body>
 </html>

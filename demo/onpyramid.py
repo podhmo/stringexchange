@@ -6,7 +6,8 @@ import os.path
 
 def top_view(request):
     js = request.string_exchange.publisher("js")
-    return {"js": js}
+    css = request.string_exchange.publisher("css")
+    return {"css": css, "js": js}
 
 
 if __name__ == '__main__':
