@@ -15,13 +15,15 @@ except IOError:
 
 install_requires=[
     'setuptools',
+    'zope.interface'
     ]
 
 docs_extras = [
     ]
 
 tests_require =[
-    "pytest"
+    "pytest", 
+    "pyramid",
 ]
 testing_extras = tests_require + [
     ]

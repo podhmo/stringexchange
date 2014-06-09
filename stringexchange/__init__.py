@@ -1,13 +1,15 @@
 # -*- coding:utf-8 -*-
 import logging
 logger = logging.getLogger(__name__)
+from zope.interface import provider
+import hashlib
+from collections import defaultdict
+
+from .compat import text_
 from .interfaces import (
     IEmitter,
     IContentsIterator
 )
-from zope.interface import provider
-import hashlib
-from collections import defaultdict
 
 
 class Gensym(object):
@@ -137,6 +139,9 @@ class Publisher(object):
         return self.buf.append(message)
 
 
+empty = text_("")
+
+
 class StringExchangeTweenFactory(object):
     def __init__(self, handler, setting):
         self.handler = handler
@@ -151,7 +156,7 @@ class StringExchangeTweenFactory(object):
             return response
 
         response_text = response.text
-        response.text = ""
+        response.text = empty
         response.write(request.string_exchange.emit(response_text))
         return response
 
