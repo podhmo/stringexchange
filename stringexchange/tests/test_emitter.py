@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 def _getTarget():
-    from hmm import StringExchange
+    from stringexchange import StringExchange
     return StringExchange
 
 
@@ -9,7 +9,7 @@ def _makeOne(*args, **kwargs):
 
 
 def test_it():
-    from hmm import default_emiter_factory
+    from stringexchange import default_emiter_factory
 
     target = _makeOne(default_emiter_factory)
     xs = [target.subscribe("xxx"), "hello", "this is", target.subscribe("xxx"), "www"]
@@ -23,7 +23,7 @@ def test_it():
 
 
 def test_funcall():
-    from hmm import function_call_emitter
+    from stringexchange import function_call_emitter
 
     target = _makeOne((lambda name: function_call_emitter))
     fmt = """f(x, {}, y, z)""".format(target.subscribe("args"))

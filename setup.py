@@ -38,7 +38,7 @@ class PyTest(TestCommand):
         pytest.main(self.test_args)
 
 
-setup(name='hmm',
+setup(name='stringexchange',
       version='0.1',
       description='anything like django sekizai',
       long_description=README + '\n\n' +  CHANGES,

@@ -20,7 +20,7 @@ def test_reify_it():
     from pyramid.testing import testConfig
 
     with testConfig() as config:
-        config.include("hmm")
+        config.include("stringexchange")
 
         # request time
         request = _makeRequest(config, path="/")
@@ -31,7 +31,7 @@ def test_it():
     from pyramid.testing import testConfig
 
     with testConfig() as config:
-        config.include("hmm")
+        config.include("stringexchange")
         config.add_route("hello", "/")
 
         def hello_view(context, request):

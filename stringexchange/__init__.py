@@ -115,7 +115,7 @@ def add_emitter(config, emitter, name=""):
 
 
 def includeme(config):
-    config.add_tween("hmm.StringExchangeTweenFactory")
+    config.add_tween("stringexchange.StringExchangeTweenFactory")
     config.add_request_method(get_string_exchange, "string_exchange", reify=True)
     config.add_directive("add_emitter", add_emitter)
     config.add_emitter(join_emitter)
