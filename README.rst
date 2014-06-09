@@ -23,6 +23,13 @@ no pyramid
 on pyramid
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+file structure
+
+- onpyramid.py
+- top.html
+
+onpyramid.py
+
 .. code:: python
 
     # -*- coding:utf-8 -*-
@@ -55,6 +62,7 @@ on pyramid
         server = make_server('0.0.0.0', 8080, app)
         server.serve_forever()
 
+top.html
 
 .. code:: html
 
@@ -84,6 +92,7 @@ on pyramid
     </body>
     </html>
 
+output
 
 .. code:: bash
 
